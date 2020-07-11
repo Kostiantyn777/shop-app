@@ -3,7 +3,7 @@ import Link from "next/link";
 const Sell = (props) => {
   return (
     <div>
-      <p>Sell Component Hello!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p>
+      <p>Kos Component</p>
       
     </div>
   );
