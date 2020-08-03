@@ -181,7 +181,7 @@ var Header = function Header() {
       lineNumber: 60
     },
     __self: this
-  }, "Sick Fits!!!!!!!!!!!!!!!!!!!!!!!!!")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Nav__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  }, "Sick Fits")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Nav__WEBPACK_IMPORTED_MODULE_1__["default"], {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 64
