@@ -5,10 +5,7 @@ const { forwardTo } = require("prisma-binding");
 const Query = {
   // I CAN USE forwardTo  when I  do not need custom logic or aunthentification between Graphql Yoga server and my Prisma database
   items: forwardTo("db"),
-  //async items(parent, args, ctx, info) {
-  //const items = await ctx.db.query.items();
-  //return items;
-  //},
+  item: forwardTo("db"),
 };
 
 module.exports = Query;
