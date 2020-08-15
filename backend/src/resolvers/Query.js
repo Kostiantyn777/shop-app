@@ -6,6 +6,7 @@ const Query = {
   // I CAN USE forwardTo  when I  do not need custom logic or aunthentification between Graphql Yoga server and my Prisma database
   items: forwardTo("db"),
   item: forwardTo("db"),
+  itemsConnection: forwardTo("db"),
 };
 
 module.exports = Query;
