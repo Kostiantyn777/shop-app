@@ -92,6 +92,15 @@ const Mutations = {
     // 5. Return the user
     return user;
   },
+
+  //Sign out
+  // 1.Add it to the schema
+  //2. Write a mutation that deletes the cookie
+  //3. Write a button in my nav.js that will trigger  Sign out mutation
+  signout(parent, args, ctx, info) {
+    ctx.response.clearCookie("token");
+    return { message: "Goodbye!" };
+  },
 };
 
 module.exports = Mutations;
