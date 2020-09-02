@@ -21,7 +21,7 @@ server.express.use((req, res, next) => {
 });
 // 2.Create a middleware that populates the user on each request
 server.express.use(async (req, res, next) => {
-  // if they are not logged in, skip this
+  // Check if they are not logged in, skip this
   if (!req.userId) return next();
   const user = await db.query.user(
     { where: { id: req.userId } },
