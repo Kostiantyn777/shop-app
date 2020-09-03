@@ -3,6 +3,7 @@ import Error from "./ErrorMessage";
 import gql from "graphql-tag";
 import Table from "./styles/Table";
 import SickButton from "./styles/SickButton";
+import PropTypes from "prop-types";
 
 const possiblePermissions = [
   "ADMIN",
@@ -37,14 +38,14 @@ const Permissions = (props) => (
                 <th>Name</th>
                 <th>Email</th>
                 {possiblePermissions.map((permission) => (
-                  <th>{permission}</th>
+                  <th key={permission}>{permission}</th>
                 ))}
                 <th>👇🏻</th>
               </tr>
             </thead>
             <tbody>
               {data.users.map((user) => (
-                <User user={user} />
+                <UserPermissions user={user} key={user.id} />
               ))}
             </tbody>
           </Table>
@@ -54,7 +55,19 @@ const Permissions = (props) => (
   </Query>
 );
 
-class User extends React.Component {
+class UserPermissions extends React.Component {
+  static propTypes = {
+    user: PropTypes.shape({
+      name: PropTypes.string,
+      email: PropTypes.string,
+      id: PropTypes.string,
+      permissions: PropTypes.array,
+    }).isRequired,
+  };
+  state = {
+    permissions: this.props.user.permissions,
+  };
+
   render() {
     const user = this.props.user;
     return (
@@ -62,7 +75,7 @@ class User extends React.Component {
         <td>{user.name}</td>
         <td>{user.email}</td>
         {possiblePermissions.map((permission) => (
-          <td>
+          <td key={permission}>
             <label htmlFor={`${user.id}-permission-${permission}`}>
               <input type="checkbox" />
             </label>
