@@ -110,6 +110,14 @@ var _jsxFileName = "C:\\Users\\produ\\Desktop\\NewShop\\shop-app\\frontend\\comp
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -273,29 +281,53 @@ function (_React$Component) {
       permissions: _this.props.user.permissions
     });
 
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handlePermissionChange", function (e) {
+      var checkbox = e.target; // take a copy of the current permissions
+
+      var updatedPermissions = _toConsumableArray(_this.state.permissions); // figure out if we need to remove or add this permission
+
+
+      if (checkbox.checked) {
+        //add it in!
+        updatedPermissions.push(checkbox.value);
+      } else {
+        updatedPermissions = updatedPermissions.filter(function (permission) {
+          return permission !== checkbox.value;
+        });
+      }
+
+      _this.setState({
+        permissions: updatedPermissions
+      });
+
+      console.log(updatedPermissions);
+    });
+
     return _this;
   }
 
   _createClass(UserPermissions, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var user = this.props.user;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 74
+          lineNumber: 91
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 75
+          lineNumber: 92
         },
         __self: this
       }, user.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 76
+          lineNumber: 93
         },
         __self: this
       }, user.email), possiblePermissions.map(function (permission) {
@@ -303,34 +335,37 @@ function (_React$Component) {
           key: permission,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 78
+            lineNumber: 95
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
           htmlFor: "".concat(user.id, "-permission-").concat(permission),
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 79
+            lineNumber: 96
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "checkbox",
+          checked: _this2.state.permissions.includes(permission),
+          value: permission,
+          onChange: _this2.handlePermissionChange,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 80
+            lineNumber: 97
           },
           __self: this
         })));
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 84
+          lineNumber: 106
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_SickButton__WEBPACK_IMPORTED_MODULE_5__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 85
+          lineNumber: 107
         },
         __self: this
       }, "Update")));
