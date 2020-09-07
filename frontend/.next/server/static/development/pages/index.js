@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -894,7 +894,7 @@ var Home = function Home(props) {
 
 /***/ }),
 
-/***/ 3:
+/***/ 7:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/
