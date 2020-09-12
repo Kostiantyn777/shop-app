@@ -801,12 +801,13 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(RemoveFromCart)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "update", function (cache, payload) {
-      //manually update thecache on the client,so it matches the server
+      console.log("Running remove from cart update function"); //manually update thecache on the client,so it matches the server
       // 1. Read the cache
+
       var data = cache.readQuery({
         query: _User__WEBPACK_IMPORTED_MODULE_5__["CURRENT_USER_QUERY"]
       });
-      console.log(data, payload); // 2. Filter the deleted item out of the cart
+      console.log(data); // 2. Filter the deleted item out of the cart
 
       var cartItemId = payload.data.removeFromCart.id;
       data.me.cart = data.me.cart.filter(function (cartItem) {
@@ -831,9 +832,16 @@ function (_Component) {
           id: this.props.id
         },
         update: this.update,
+        optimisticResponse: {
+          __typename: "Mutation",
+          removeFromCart: {
+            __typename: "CartItem",
+            id: this.props.id
+          }
+        },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 45
+          lineNumber: 46
         },
         __self: this
       }, function (removeFromCart, _ref) {
@@ -849,7 +857,7 @@ function (_Component) {
           title: "Delete Item",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 51
+            lineNumber: 59
           },
           __self: this
         }, "\xD7");

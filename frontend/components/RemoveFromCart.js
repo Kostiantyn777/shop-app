@@ -28,10 +28,11 @@ class RemoveFromCart extends Component {
   };
 
   update = (cache, payload) => {
+    console.log("Running remove from cart update function");
     //manually update thecache on the client,so it matches the server
     // 1. Read the cache
     const data = cache.readQuery({ query: CURRENT_USER_QUERY });
-    console.log(data, payload);
+    console.log(data);
     // 2. Filter the deleted item out of the cart
     const cartItemId = payload.data.removeFromCart.id;
     data.me.cart = data.me.cart.filter(
@@ -46,6 +47,13 @@ class RemoveFromCart extends Component {
         mutation={REMOVE_FROM_CART_MUTATION}
         variables={{ id: this.props.id }}
         update={this.update}
+        optimisticResponse={{
+          __typename: "Mutation",
+          removeFromCart: {
+            __typename: "CartItem",
+            id: this.props.id,
+          },
+        }}
       >
         {(removeFromCart, { loading, error }) => (
           <BigButton
