@@ -1570,6 +1570,17 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  mutation createOrder($token: String!) {\n    createOrder(token: $token) {\n      id\n      charge\n      total\n      items {\n        id\n        title\n      }\n    }\n  }\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
 
@@ -1580,6 +1591,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+var CREATE_ORDER_MUTATION = graphql_tag__WEBPACK_IMPORTED_MODULE_6___default()(_templateObject());
 
 function totalItems(cart) {
   return cart.reduce(function (tally, cartItem) {
@@ -1605,9 +1618,17 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(TakeMyMoney)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onToken", function (res) {
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "onToken", function (res, createOrder) {
       console.log("On Token Called!");
-      console.log(res.id);
+      console.log(res.id); // manually call the mutation once we have the stripe token
+
+      createOrder({
+        variables: {
+          token: res.id
+        }
+      }).catch(function (err) {
+        alert(err.message);
+      });
     });
 
     return _this;
@@ -1621,28 +1642,40 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User__WEBPACK_IMPORTED_MODULE_9__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 24
+          lineNumber: 46
         },
         __self: this
       }, function (_ref) {
         var me = _ref.data.me;
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stripe_checkout__WEBPACK_IMPORTED_MODULE_1___default.a, {
-          amount: Object(_lib_calcTotalPrice__WEBPACK_IMPORTED_MODULE_7__["default"])(me.cart),
-          name: "Sick Fits",
-          description: "Order of ".concat(totalItems(me.cart), " items!"),
-          image: me.cart[0].item && me.cart[0].item.image,
-          stripeKey: "pk_test_51HUEuAADSS7NgXkCMyiYWj1VLBqpbckZgKaw4I5LCil8o7EGmfpclee9oEyV6VNPWdz3Og5lhUUZCZj3REEo4B1900OCtNZo4z",
-          currency: "USD",
-          email: me.email,
-          token: function token(res) {
-            return _this2.onToken(res);
-          },
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["Mutation"], {
+          mutation: CREATE_ORDER_MUTATION,
+          refetchQueries: [{
+            query: _User__WEBPACK_IMPORTED_MODULE_9__["CURRENT_USER_QUERY"]
+          }],
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 26
+            lineNumber: 48
           },
           __self: this
-        }, _this2.props.children);
+        }, function (createOrder) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stripe_checkout__WEBPACK_IMPORTED_MODULE_1___default.a, {
+            amount: Object(_lib_calcTotalPrice__WEBPACK_IMPORTED_MODULE_7__["default"])(me.cart),
+            name: "Sick Fits",
+            description: "Order of ".concat(totalItems(me.cart), " items!"),
+            image: me.cart[0].item && me.cart[0].item.image,
+            stripeKey: "pk_test_51HUEuAADSS7NgXkCMyiYWj1VLBqpbckZgKaw4I5LCil8o7EGmfpclee9oEyV6VNPWdz3Og5lhUUZCZj3REEo4B1900OCtNZo4z",
+            currency: "USD",
+            email: me.email,
+            token: function token(res) {
+              return _this2.onToken(res, createOrder);
+            },
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 53
+            },
+            __self: this
+          }, _this2.props.children);
+        });
       });
     }
   }]);
