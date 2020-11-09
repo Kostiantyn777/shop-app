@@ -122,8 +122,12 @@ const Mutations = {
   // 1.Add it to the schema
   //2. Write a mutation that deletes the cookie
   //3. Write a button in my nav.js that will trigger  Sign out mutation
-  signout(parent, args, ctx, info) {
-    ctx.response.clearCookie("token");
+  signout(parent, args, {prisma,response}, info) {
+    response.clearCookie(name:'token', options: {
+      httpOnly:true,
+      secure:process.env.NODE_ENV==='production'? 'true':'false',
+      sameSite:'none'
+    })
     return { message: "Goodbye!" };
   },
 
